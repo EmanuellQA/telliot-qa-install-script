@@ -76,13 +76,12 @@ fi
 
 echo
 echo "Moving to telliot-core folder..."
-cd "$HOME/telliot-core-qa-test"
+cd "$HOME/telliot-feeds-qa-test/telliot-core-qa-test"
 
 echo
 echo "Installing telliot core"
 pip install -e .
 telliot config init
-cd
 
 # Upgrade pip inside the virtual environment
 #echo
