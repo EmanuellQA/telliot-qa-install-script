@@ -7,25 +7,25 @@ if [ -d "$HOME/telliot-feeds-qa-test" ]; then
 fi
 
 echo 
-echo "This script will install Python, Telliot-feeds and Telliot-core"
+echo "This script will install Python, Telliot-feeds-qa and Telliot-core-qa"
 echo "If installing in your main machine, please read the install.sh before continuing!"
 echo
 echo "Choose the environment to clone and install:"
-echo "1 - main"
-echo "2 - dev"
-read -p "Enter 1-main or 2-dev: " environment_choice
+echo "1 - testnet"
+echo "2 - staging"
+read -p "Enter 1-testnet or 2-staging: " environment_choice
 
 echo "You entered: $environment_choice"
 
 case $environment_choice in
   1)
-    branch="main"
+    branch="testnet"
     ;;
   2)
-    branch="main"
+    branch="staging"
     ;;
   *)
-    echo "Invalid choice. Please enter 1 for main or 2 for dev."
+    echo "Invalid choice. Please enter 1 for testnet or 2 for staging."
     exit 1
     ;;
 esac
@@ -34,7 +34,7 @@ echo "Cloning branch: $branch"
 echo
 
 # Clone the repository with the selected branch
-echo "Cloning telliot-feeds..."
+echo "Cloning telliot-feeds-qa..."
 git clone -b "$branch" https://github.com/EmanuellQA/telliot-feeds-qa-test.git
 
 if [ $? -eq 0 ]; then
