@@ -7,15 +7,17 @@ if [ -d "$HOME/telliot-feeds-qa-test" ]; then
 fi
 
 echo 
-echo "This script will install Python, Telliot-feeds-qa and Telliot-core-qa"
+echo "  ------------------------------------------------------------------------"
+echo "   This script will install Python, Telliot-feeds-qa and Telliot-core-qa" 
+echo "              (Optionally you can also choose to install DVM)"
+echo "  ------------------------------------------------------------------------"
 echo "If installing in your main machine, please read the install.sh before continuing!"
 echo
-echo "Choose the environment to clone and install:"
+cd "$HOME/"
+echo "Choose the environment to clone and install: "
 echo "1 - testnet"
 echo "2 - staging"
 read -p "Enter 1-testnet or 2-staging: " environment_choice
-
-echo "You entered: $environment_choice"
 
 case $environment_choice in
   1)
@@ -29,6 +31,27 @@ case $environment_choice in
     exit 1
     ;;
 esac
+echo "You entered: $branch"
+echo
+read -p "Do you want to install DVM (Disputable Values Manager), too? " install_dvm
+
+# Treat empty response (just pressing Enter) as "yes"
+install_dvm=${install_dvm:-yes}
+
+case $install_dvm in
+  [Yy][Ee][Ss]|[Yy])  # Matches yes, Yes, YES, y, or Y
+    dvm="yes"
+        echo "Will install Telliot and DVM."
+    ;;
+  [Nn][Oo]|[Nn])  # Matches no, No, NO, n, or N
+    dvm="no"
+        echo "Installing only Telliot."
+    ;;
+  *)
+    echo "Invalid choice. Please enter 'y' or 'n'."
+    exit 1
+    ;;
+esac
 
 echo "Cloning branch: $branch"
 echo
@@ -38,15 +61,15 @@ echo "Cloning telliot-feeds-qa..."
 git clone -b "$branch" https://github.com/EmanuellQA/telliot-feeds-qa-test.git
 
 if [ $? -eq 0 ]; then
-  echo "Repository cloned successfully."
+  echo "Telliot-feeds cloned successfully."
 else
-  echo "Failed to clone repository."
+  echo "Failed to clone telliot-feeds."
   exit 1
 fi
 
 echo
 echo "Moving to telliot-feeds folder..."
-cd "$HOME/telliot-feeds-qa-test"
+cd "$HOME/telliot-feeds-qa-test" || { echo "Failed to change directory. Make sure to install it from HOME."; exit 1; }
 
 echo
 echo "Installing Python 3.9 and venv..."
@@ -68,20 +91,44 @@ echo "Cloning telliot-core..."
 git clone -b "$branch" https://github.com/EmanuellQA/telliot-core-qa-test.git
 
 if [ $? -eq 0 ]; then
-  echo "Repository cloned successfully."
+  echo "Telliot-core cloned successfully."
 else
-  echo "Failed to clone repository."
+  echo "Failed to clone telliot-core."
   exit 1
 fi
 
 echo
 echo "Moving to telliot-core folder..."
-cd "$HOME/telliot-feeds-qa-test/telliot-core-qa-test"
+cd "$HOME/telliot-feeds-qa-test/telliot-core-qa-test" || { echo "Failed to change directory."; exit 1; }
 
 echo
 echo "Installing telliot core"
 pip install -e .
 telliot config init
+
+cd "$HOME/telliot-feeds-qa-test/" || { echo "Failed to change directory."; exit 1; }
+
+if [ "$dvm" = "yes" ]; then
+  echo
+  echo "Cloning DVM..."
+  git clone -b "$branch" https://github.com/EmanuellQA/disputable-values-monitor-qa.git
+
+  if [ $? -eq 0 ]; then
+    echo "DVM cloned successfully."
+  else
+    echo "Failed to clone DVM."
+    exit 1
+  fi
+
+  echo
+  echo "Moving to DVM folder..."
+  cd "$HOME/telliot-feeds-qa-test/disputable-values-monitor-qa" || { echo "Failed to change directory."; exit 1; }
+
+  echo
+  echo "Installing DVM"
+  pip install -e .
+fi  
+  
 
 # Upgrade pip inside the virtual environment
 #echo
@@ -108,6 +155,12 @@ telliot config init
 #"$HOME/.foundry/bin/foundryup"
 
 echo
-echo "Installation complete! Confirm you're inside venv before running telliot commands"
+echo "---------------------------------------------------------------------------------------"
+echo "--Installation complete! Confirm you're inside venv before running telliot commands.--"
+if [ "$dvm" = "yes" ]; then
+  echo "  --To run DVM, first run 'source vars.sh' to load the Discord alert variables.--"
+fi
+echo "---------------------------------------------------------------------------------------"
+exit 0
 #echo
 #echo -e "RESTART your terminal! \nRun 'cd ~/foundry-telliot-helper' to get in the folder\n Then run 'source foundryVenv/bin/activate' to activate python venv\n Don't forget to copy and edit the '.env.example' file!\n\n To run the tool: 'python3 main.py'"
