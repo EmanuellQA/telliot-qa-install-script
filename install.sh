@@ -11,7 +11,7 @@ echo "  ------------------------------------------------------------------------
 echo "   This script will install Python, Telliot-feeds-qa and Telliot-core-qa" 
 echo "              (Optionally you can also choose to install DVM)"
 echo "  ------------------------------------------------------------------------"
-echo "If installing in your main machine, please read the install.sh before continuing!"
+echo "If installing in your main machine, please read the install.sh before install!"
 echo
 cd "$HOME/"
 echo "Choose the environment to clone and install: "
@@ -155,12 +155,13 @@ fi
 #"$HOME/.foundry/bin/foundryup"
 
 echo
-echo "---------------------------------------------------------------------------------------"
-echo "--Installation complete! Confirm you're inside venv before running telliot commands.--"
+echo "╔══════════════════════════════════════════════════════════════════════════╗"
+echo "║Installation complete! Confirm you're inside venv before running anything.║"
 if [ "$dvm" = "yes" ]; then
-  echo "  --To run DVM, first run 'source vars.sh' to load the Discord alert variables.--"
+  echo "║                           To run the DVM:                                ║"
+  echo "║Always run 'source vars.sh' from DVM folder to load the Discord variables ║"
 fi
-echo "---------------------------------------------------------------------------------------"
+echo "╚══════════════════════════════════════════════════════════════════════════╝"
 exit 0
 #echo
 #echo -e "RESTART your terminal! \nRun 'cd ~/foundry-telliot-helper' to get in the folder\n Then run 'source foundryVenv/bin/activate' to activate python venv\n Don't forget to copy and edit the '.env.example' file!\n\n To run the tool: 'python3 main.py'"
