@@ -7,10 +7,10 @@ if [ -d "$HOME/telliot-feeds-qa-test" ]; then
 fi
 
 echo 
-echo "  ------------------------------------------------------------------------"
-echo "   This script will install Python, Telliot-feeds-qa and Telliot-core-qa" 
-echo "              (Optionally you can also choose to install DVM)"
-echo "  ------------------------------------------------------------------------"
+echo "  ╔═══════════════════════════════════════════════════════════════════════╗"
+echo "  ║ This script will install Python, Telliot-feeds-qa and Telliot-core-qa ║" 
+echo "  ║           (Optionally you can also choose to install DVM-qa)          ║"
+echo "  ╚═══════════════════════════════════════════════════════════════════════╝"
 echo "If installing in your main machine, please read the install.sh before install!"
 echo
 cd "$HOME/"
