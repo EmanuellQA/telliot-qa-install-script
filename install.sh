@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Check if the directory already exists
-if [ -d "$HOME/telliot-feeds-qa-test" ]; then
-  echo "The folder 'telliot-feeds-qa-test' already exists. Please remove or rename it to save old configs."
+if [ -d "$HOME/telliot-feeds-alt" ]; then
+  echo "The folder 'telliot-feeds-alt' already exists. Please remove or rename it to save old configs."
   exit 1
 fi
 
