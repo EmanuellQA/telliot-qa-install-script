@@ -15,19 +15,19 @@ echo "If installing in your main machine, please read the install.sh before inst
 echo
 cd "$HOME/"
 echo "Choose the environment to clone and install: "
-echo "1 - Testnet"
-echo "2 - Staging(QA only)"
+echo "1 - Testnet/Main (default)"
+echo "2 - Staging(QA tests only)"
 read -p "Enter 1-testnet or 2-staging: " environment_choice
 
 case $environment_choice in
   1)
-    branch="testnet"
+    branch="testnet/main"
     ;;
   2)
     branch="staging"
     ;;
   *)
-    echo "Invalid choice. Please enter 1 for testnet or 2 for staging."
+    echo "Invalid choice. Please enter 1 for testnet/main or 2 for staging."
     exit 1
     ;;
 esac
