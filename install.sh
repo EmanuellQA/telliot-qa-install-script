@@ -21,7 +21,7 @@ read -p "Enter 1-testnet or 2-staging: " environment_choice
 
 case $environment_choice in
   1)
-    branch="testnet/main"
+    branch="testnet"
     ;;
   2)
     branch="staging"
